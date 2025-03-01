@@ -1,15 +1,15 @@
 package br.com.dbserver.desafio_votacao.service;
 
 
-import br.com.dbserver.desafio_votacao.dto.VotoDto;
+import br.com.dbserver.desafio_votacao.dto.VotoDTO;
 
 import java.util.List;
 
 public interface VotoService {
 
-    public List<VotoDto> listarTodas();
-    public VotoDto buscarPorId(Long id);
-    public VotoDto salvar(VotoDto votoDto);
-    public VotoDto atualizar(Long id, VotoDto votoDto);
+    public List<VotoDTO> listarTodas();
+    public VotoDTO buscarPorId(Long id);
+    public VotoDTO salvar(VotoDTO votoDto);
+    public VotoDTO atualizar(Long id, VotoDTO votoDto);
     public void deletarPorId(Long id);
 }

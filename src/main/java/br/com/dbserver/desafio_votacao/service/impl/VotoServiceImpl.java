@@ -1,14 +1,12 @@
 package br.com.dbserver.desafio_votacao.service.impl;
 
-import br.com.dbserver.desafio_votacao.dto.AssociadoDto;
-import br.com.dbserver.desafio_votacao.dto.SessaoVotacaoDto;
-import br.com.dbserver.desafio_votacao.dto.VotoDto;
+import br.com.dbserver.desafio_votacao.dto.AssociadoDTO;
+import br.com.dbserver.desafio_votacao.dto.SessaoVotacaoDTO;
+import br.com.dbserver.desafio_votacao.dto.VotoDTO;
 import br.com.dbserver.desafio_votacao.exception.RecursoNaoEncontradoException;
 import br.com.dbserver.desafio_votacao.exception.VotacaoForaDaSessaoException;
 import br.com.dbserver.desafio_votacao.exception.VotacaoJaFeitaComEsseCpfException;
 import br.com.dbserver.desafio_votacao.mapper.VotoMapper;
-import br.com.dbserver.desafio_votacao.model.Associado;
-import br.com.dbserver.desafio_votacao.model.SessaoVotacao;
 import br.com.dbserver.desafio_votacao.model.Voto;
 import br.com.dbserver.desafio_votacao.repository.VotoRepository;
 import br.com.dbserver.desafio_votacao.service.AssociadoService;
@@ -36,7 +34,7 @@ public class VotoServiceImpl implements VotoService {
     }
 
     @Override
-    public List<VotoDto> listarTodas() {
+    public List<VotoDTO> listarTodas() {
         return votoRepository.findAll()
                 .stream()
                 .map(votoMapper::toDto)
@@ -44,14 +42,14 @@ public class VotoServiceImpl implements VotoService {
     }
 
     @Override
-    public VotoDto buscarPorId(Long id) {
+    public VotoDTO buscarPorId(Long id) {
         Voto voto = votoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException ("\"Voto não encontrada com Id: \" + id)"));
         return votoMapper.toDto(voto);
     }
 
     @Override
-    public VotoDto salvar(VotoDto votoDto) {
+    public VotoDTO salvar(VotoDTO votoDto) {
 
         Voto voto = votoMapper.toEntity(votoDto);
         this.validarVoto(votoDto);
@@ -60,7 +58,7 @@ public class VotoServiceImpl implements VotoService {
     }
 
     @Override
-    public VotoDto atualizar(Long id, VotoDto votoDto) {
+    public VotoDTO atualizar(Long id, VotoDTO votoDto) {
         associadoService.buscarPorId(votoDto.cpfAssociado());
         sessaoVotacaoService.buscarPorId(votoDto.idSessaoVotacao());
 
@@ -76,14 +74,14 @@ public class VotoServiceImpl implements VotoService {
         votoRepository.deleteById(id);
     }
 
-    private void validarVoto (VotoDto votoDto){
-        AssociadoDto associadoDto = associadoService.buscarPorId(votoDto.cpfAssociado());
-        SessaoVotacaoDto sessaoVotacaoDto = sessaoVotacaoService.buscarPorId(votoDto.idSessaoVotacao());
+    private void validarVoto (VotoDTO votoDto){
+        AssociadoDTO associadoDto = associadoService.buscarPorId(votoDto.cpfAssociado());
+        SessaoVotacaoDTO sessaoVotacaoDto = sessaoVotacaoService.buscarPorId(votoDto.idSessaoVotacao());
         this.verificarVotoUnico(associadoDto, sessaoVotacaoDto);
         this.verificarHorarioDeVotacao(sessaoVotacaoDto);
 
     }
-    private void verificarVotoUnico(AssociadoDto associadoDto, SessaoVotacaoDto sessaoVotacaoDto){
+    private void verificarVotoUnico(AssociadoDTO associadoDto, SessaoVotacaoDTO sessaoVotacaoDto){
         votoRepository.findByAssociado_CpfAndSessaoVotacao_Id(associadoDto.cpf(), sessaoVotacaoDto.id())
                 .ifPresent(v -> {
                     throw new VotacaoJaFeitaComEsseCpfException("Voto não permitido. Já foi feito uma votação para a" +
@@ -91,7 +89,7 @@ public class VotoServiceImpl implements VotoService {
                             " pelo associado de cpf: " + v.getAssociado().getCpf());
                 } );
     }
-    private void verificarHorarioDeVotacao(SessaoVotacaoDto sessaoVotacaoDto){
+    private void verificarHorarioDeVotacao(SessaoVotacaoDTO sessaoVotacaoDto){
         LocalDateTime agora = LocalDateTime.now();
         if(agora.isBefore(sessaoVotacaoDto.aberturaSessao())){
             throw new VotacaoForaDaSessaoException("Voto não pôde ser efetuado. Sessão não iniciada");

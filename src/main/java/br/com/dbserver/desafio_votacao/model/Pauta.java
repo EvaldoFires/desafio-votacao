@@ -1,13 +1,12 @@
 package br.com.dbserver.desafio_votacao.model;
 
+import br.com.dbserver.desafio_votacao.model.enums.EscolhaVoto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -21,8 +20,7 @@ public class Pauta {
     private String titulo;
     private String descricao;
     private LocalDateTime dataCriacao = LocalDateTime.now();
-    @OneToMany(mappedBy = "pauta")
-    private List<SessaoVotacao> sessoesVotacao = new ArrayList<>();
 
+    private EscolhaVoto resultadoUltimaVotacao;
 
 }

@@ -1,7 +1,7 @@
 package br.com.dbserver.desafio_votacao.service.impl;
 
-import br.com.dbserver.desafio_votacao.dto.AssociadoDto;
-import br.com.dbserver.desafio_votacao.dto.AtualizarAssociadoDto;
+import br.com.dbserver.desafio_votacao.dto.AssociadoDTO;
+import br.com.dbserver.desafio_votacao.dto.AtualizarAssociadoDTO;
 import br.com.dbserver.desafio_votacao.exception.CpfJaCadastradoException;
 import br.com.dbserver.desafio_votacao.exception.RecursoNaoEncontradoException;
 import br.com.dbserver.desafio_votacao.mapper.AssociadoMapper;
@@ -24,7 +24,7 @@ public class AssociadoServiceImpl implements AssociadoService {
     }
 
     @Override
-    public List<AssociadoDto> listarTodas() {
+    public List<AssociadoDTO> listarTodas() {
         return associadoRepository.findAll()
                 .stream()
                 .map(associadoMapper::toDto)
@@ -32,14 +32,14 @@ public class AssociadoServiceImpl implements AssociadoService {
     }
 
     @Override
-    public AssociadoDto buscarPorId(String cpf) {
+    public AssociadoDTO buscarPorId(String cpf) {
         Associado associado = associadoRepository.findById(cpf)
                 .orElseThrow(()-> new RecursoNaoEncontradoException("Associado não encontrado com CPF: " + cpf));
         return associadoMapper.toDto(associado);
     }
 
     @Override
-    public AssociadoDto salvar(AssociadoDto associadoDto) {
+    public AssociadoDTO salvar(AssociadoDTO associadoDto) {
         associadoRepository.findById(associadoDto.cpf()).ifPresent(associado -> {
             throw new CpfJaCadastradoException("Associado já cadastrado com CPF: " + associado.getCpf());
         });
@@ -49,7 +49,7 @@ public class AssociadoServiceImpl implements AssociadoService {
     }
 
     @Override
-    public AssociadoDto atualizar(String cpf, AtualizarAssociadoDto atualizarAssociadoDto) {
+    public AssociadoDTO atualizar(String cpf, AtualizarAssociadoDTO atualizarAssociadoDto) {
         Associado associado = associadoMapper.toEntity(this.buscarPorId(cpf));
         associadoMapper.updateFromDto(atualizarAssociadoDto, associado);
         associado = associadoRepository.save(associado);

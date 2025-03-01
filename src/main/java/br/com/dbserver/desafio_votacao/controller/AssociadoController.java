@@ -1,7 +1,7 @@
 package br.com.dbserver.desafio_votacao.controller;
 
-import br.com.dbserver.desafio_votacao.dto.AssociadoDto;
-import br.com.dbserver.desafio_votacao.dto.AtualizarAssociadoDto;
+import br.com.dbserver.desafio_votacao.dto.AssociadoDTO;
+import br.com.dbserver.desafio_votacao.dto.AtualizarAssociadoDTO;
 import br.com.dbserver.desafio_votacao.service.AssociadoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,9 +28,9 @@ public class AssociadoController {
     @Operation(summary = "Listar todos os associados", description = "Retorna uma lista de todos os associados cadastrados")
     @ApiResponse(responseCode = "200", description = "Lista de associados retornada com sucesso",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = AssociadoDto.class)))
+                    schema = @Schema(implementation = AssociadoDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public ResponseEntity<List<AssociadoDto>> listarTodos(){
+    public ResponseEntity<List<AssociadoDTO>> listarTodos(){
         return ResponseEntity.ok(associadoService.listarTodas());    
     }
 
@@ -38,10 +38,10 @@ public class AssociadoController {
     @Operation(summary = "Buscar associado por CPF", description = "Busca uma associado pelo seu CPF")
     @ApiResponse(responseCode = "200", description = "Associado encontrado com sucesso",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = AssociadoDto.class)))
+                    schema = @Schema(implementation = AssociadoDTO.class)))
     @ApiResponse(responseCode = "404", description = "Associado nao encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public ResponseEntity<AssociadoDto> buscar(@PathVariable String cpf){
+    public ResponseEntity<AssociadoDTO> buscar(@PathVariable String cpf){
         return  ResponseEntity.ok(associadoService.buscarPorId(cpf));
     }
 
@@ -49,10 +49,10 @@ public class AssociadoController {
     @Operation(summary = "Salvar novo associado", description = "Cadastra um novo associado")
     @ApiResponse(responseCode = "201", description = "Associado cadastrado com sucesso",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = AssociadoDto.class)))
+                    schema = @Schema(implementation = AssociadoDTO.class)))
     @ApiResponse(responseCode = "400", description = "Requisição inválida")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public ResponseEntity<AssociadoDto> salvar(@Valid @RequestBody AssociadoDto associadoDto){
+    public ResponseEntity<AssociadoDTO> salvar(@Valid @RequestBody AssociadoDTO associadoDto){
         return  ResponseEntity.status(HttpStatus.CREATED).body(associadoService.salvar(associadoDto));
     }
 
@@ -60,11 +60,11 @@ public class AssociadoController {
     @Operation(summary = "Atualizar associado", description = "Atualiza uma associado existente")
     @ApiResponse(responseCode = "201", description = "Associado atualizado com sucesso",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = AssociadoDto.class)))
+                    schema = @Schema(implementation = AssociadoDTO.class)))
     @ApiResponse(responseCode = "400", description = "Requisição inválida")
     @ApiResponse(responseCode = "404", description = "Associado não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public ResponseEntity<AssociadoDto> atualizar(@PathVariable String cpf, @Valid @RequestBody AtualizarAssociadoDto atualizarAssociadoDto){
+    public ResponseEntity<AssociadoDTO> atualizar(@PathVariable String cpf, @Valid @RequestBody AtualizarAssociadoDTO atualizarAssociadoDto){
         return ResponseEntity.ok(associadoService.atualizar(cpf, atualizarAssociadoDto));
     }
 

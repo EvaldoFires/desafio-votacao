@@ -1,6 +1,6 @@
 package br.com.dbserver.desafio_votacao.controller;
 
-import br.com.dbserver.desafio_votacao.dto.VotoDto;
+import br.com.dbserver.desafio_votacao.dto.VotoDTO;
 import br.com.dbserver.desafio_votacao.service.VotoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,9 +27,9 @@ public class VotoController {
     @Operation(summary = "Listar todos os votos", description = "Retorna uma lista de todos os votos cadastrados")
     @ApiResponse(responseCode = "200", description = "Lista de votos retornada com sucesso",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = VotoDto.class)))
+                    schema = @Schema(implementation = VotoDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public ResponseEntity<List<VotoDto>> listarTodas(){
+    public ResponseEntity<List<VotoDTO>> listarTodas(){
         return ResponseEntity.ok(votoService.listarTodas());
     }
 
@@ -37,10 +37,10 @@ public class VotoController {
     @Operation(summary = "Buscar voto por ID", description = "Busca um voto pelo seu ID")
     @ApiResponse(responseCode = "200", description = "Voto encontrado com sucesso",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = VotoDto.class)))
+                    schema = @Schema(implementation = VotoDTO.class)))
     @ApiResponse(responseCode = "404", description = "Voto nao encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public ResponseEntity<VotoDto> buscar(@PathVariable Long id){
+    public ResponseEntity<VotoDTO> buscar(@PathVariable Long id){
         return  ResponseEntity.ok(votoService.buscarPorId(id));
     }
 
@@ -48,10 +48,10 @@ public class VotoController {
     @Operation(summary = "Salvar novo voto", description = "Cadastra um novo voto")
     @ApiResponse(responseCode = "201", description = "Voto cadastrado com sucesso",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = VotoDto.class)))
+                    schema = @Schema(implementation = VotoDTO.class)))
     @ApiResponse(responseCode = "400", description = "Requisição inválida")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public ResponseEntity<VotoDto> salvar(@Valid @RequestBody VotoDto votoDto){
+    public ResponseEntity<VotoDTO> salvar(@Valid @RequestBody VotoDTO votoDto){
         return  ResponseEntity.status(HttpStatus.CREATED).body(votoService.salvar(votoDto));
     }
 
@@ -59,11 +59,11 @@ public class VotoController {
     @Operation(summary = "Atualizar voto", description = "Atualiza um voto existente")
     @ApiResponse(responseCode = "201", description = "Voto atualizado com sucesso",
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = VotoDto.class)))
+                    schema = @Schema(implementation = VotoDTO.class)))
     @ApiResponse(responseCode = "400", description = "Requisição inválida")
     @ApiResponse(responseCode = "404", description = "Voto não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-    public ResponseEntity<VotoDto> atualizar(@PathVariable Long id, @Valid @RequestBody VotoDto votoDto){
+    public ResponseEntity<VotoDTO> atualizar(@PathVariable Long id, @Valid @RequestBody VotoDTO votoDto){
         return ResponseEntity.ok(votoService.atualizar(id, votoDto));
     }
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record VotoDto(
+public record VotoDTO(
 
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Long id,

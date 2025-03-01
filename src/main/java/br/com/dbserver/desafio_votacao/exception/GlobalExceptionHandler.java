@@ -51,4 +51,17 @@ public class GlobalExceptionHandler {
         response.put("erro", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException e){
+        Map<String, String> response = new HashMap<>();
+        response.put("erro", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(SessaoVotacaoDaPautaJaExisteException.class)
+    public ResponseEntity<Map<String, String>> handleSessaoVotacaoDaPautaJaExisteException(SessaoVotacaoDaPautaJaExisteException e){
+        Map<String, String> response = new HashMap<>();
+        response.put("erro", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 }
