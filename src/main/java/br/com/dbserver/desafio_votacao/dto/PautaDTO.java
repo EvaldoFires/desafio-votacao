@@ -1,6 +1,5 @@
 package br.com.dbserver.desafio_votacao.dto;
 
-import br.com.dbserver.desafio_votacao.model.enums.EscolhaVoto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 
@@ -18,11 +17,6 @@ public record PautaDTO(
         String descricao,
 
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-        LocalDateTime dataCriacao,
-
-        @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-        EscolhaVoto resultadoUltimaVotacao
-
-
+        LocalDateTime dataCriacao
 ) {
 }

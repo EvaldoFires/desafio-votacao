@@ -1,6 +1,5 @@
 package br.com.dbserver.desafio_votacao.model;
 
-import br.com.dbserver.desafio_votacao.model.enums.EscolhaVoto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +19,4 @@ public class Pauta {
     private String titulo;
     private String descricao;
     private LocalDateTime dataCriacao = LocalDateTime.now();
-
-    private EscolhaVoto resultadoUltimaVotacao;
-
 }
