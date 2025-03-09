@@ -76,9 +76,9 @@ public class VotoServiceImpl implements VotoService {
     private void validarVoto (VotoDTO votoDto){
         AssociadoDTO associadoDto = associadoService.buscarPorId(votoDto.cpfAssociado());
         SessaoVotacaoDTO sessaoVotacaoDto = sessaoVotacaoService.buscarPorId(votoDto.idSessaoVotacao());
+        this.verificarHorarioDeVotacao(sessaoVotacaoDto);
         this.verificarCPFValido(associadoDto.cpf());
         this.verificarVotoUnico(associadoDto, sessaoVotacaoDto);
-        this.verificarHorarioDeVotacao(sessaoVotacaoDto);
 
     }
     private void verificarVotoUnico(AssociadoDTO associadoDto, SessaoVotacaoDTO sessaoVotacaoDto){

@@ -25,7 +25,7 @@ public class CPFValidadorClient {
         try {
             Map<String, String> response = webClientBuilder.build()
                     .get()
-                    .uri(cpfValidatorUrl + "/" + cpfNumerico)
+                    .uri(cpfValidatorUrl + "/cpf/" + cpfNumerico)
                     .retrieve()
                     .bodyToMono(new ParameterizedTypeReference<Map<String, String>>() {})
                     .block();
