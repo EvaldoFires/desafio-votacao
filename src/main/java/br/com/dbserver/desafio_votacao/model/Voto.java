@@ -3,12 +3,14 @@ package br.com.dbserver.desafio_votacao.model;
 import br.com.dbserver.desafio_votacao.model.enums.EscolhaVoto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Entity
 @Data
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Voto {

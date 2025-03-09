@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/associado")
+@RequestMapping("/v1/associado")
 public class AssociadoController {
     
     private final AssociadoService associadoService;
