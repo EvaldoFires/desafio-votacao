@@ -64,4 +64,11 @@ public class GlobalExceptionHandler {
         response.put("erro", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    @ExceptionHandler(CPFUnableToVoteException.class)
+    public ResponseEntity<Map<String, String>> handleCPFUnableToVoteException(CPFUnableToVoteException e){
+        Map<String, String> response = new HashMap<>();
+        response.put("erro", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 }

@@ -11,25 +11,19 @@ import br.com.dbserver.desafio_votacao.repository.PautaRepository;
 import br.com.dbserver.desafio_votacao.repository.SessaoVotacaoRepository;
 import br.com.dbserver.desafio_votacao.repository.VotoRepository;
 import br.com.dbserver.desafio_votacao.service.PautaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PautaServiceImpl implements PautaService {
 
     private final PautaRepository pautaRepository;
     private final PautaMapper pautaMapper;
     private final VotoRepository votoRepository;
     private final SessaoVotacaoRepository sessaoVotacaoRepository;
-
-    public PautaServiceImpl(PautaRepository pautaRepository, PautaMapper pautaMapper,
-                            VotoRepository votoRepository, SessaoVotacaoRepository sessaoVotacaoRepository) {
-        this.pautaRepository = pautaRepository;
-        this.pautaMapper = pautaMapper;
-        this.votoRepository = votoRepository;
-        this.sessaoVotacaoRepository = sessaoVotacaoRepository;
-    }
 
     @Override
     public List<PautaDTO> listarTodas() {

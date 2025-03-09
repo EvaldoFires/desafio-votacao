@@ -8,20 +8,17 @@ import br.com.dbserver.desafio_votacao.mapper.AssociadoMapper;
 import br.com.dbserver.desafio_votacao.model.Associado;
 import br.com.dbserver.desafio_votacao.repository.AssociadoRepository;
 import br.com.dbserver.desafio_votacao.service.AssociadoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AssociadoServiceImpl implements AssociadoService {
 
     private final AssociadoRepository associadoRepository;
     private final AssociadoMapper associadoMapper;
-
-    public AssociadoServiceImpl (AssociadoRepository associadoRepository, AssociadoMapper associadoMapper){
-        this.associadoRepository = associadoRepository;
-        this.associadoMapper = associadoMapper;
-    }
 
     @Override
     public List<AssociadoDTO> listarTodas() {

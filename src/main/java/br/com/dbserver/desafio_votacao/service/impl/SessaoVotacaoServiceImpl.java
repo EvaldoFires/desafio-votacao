@@ -8,25 +8,19 @@ import br.com.dbserver.desafio_votacao.model.SessaoVotacao;
 import br.com.dbserver.desafio_votacao.repository.SessaoVotacaoRepository;
 import br.com.dbserver.desafio_votacao.service.PautaService;
 import br.com.dbserver.desafio_votacao.service.SessaoVotacaoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SessaoVotacaoServiceImpl implements SessaoVotacaoService {
 
     private final SessaoVotacaoRepository sessaoVotacaoRepository;
     private final SessaoVotacaoMapper sessaoVotacaoMapper;
     private final PautaService pautaService;
-
-    public SessaoVotacaoServiceImpl (SessaoVotacaoRepository sessaoVotacaoRepository,
-                                     SessaoVotacaoMapper sessaoVotacaoMapper,
-                                     PautaService pautaService){
-        this.sessaoVotacaoRepository = sessaoVotacaoRepository;
-        this.sessaoVotacaoMapper = sessaoVotacaoMapper;
-        this.pautaService = pautaService;
-    }
 
     @Override
     public List<SessaoVotacaoDTO> listarTodas() {

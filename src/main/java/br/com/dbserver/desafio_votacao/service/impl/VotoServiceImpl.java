@@ -1,37 +1,36 @@
 package br.com.dbserver.desafio_votacao.service.impl;
 
+import br.com.dbserver.desafio_votacao.client.CPFValidadorClient;
 import br.com.dbserver.desafio_votacao.dto.AssociadoDTO;
 import br.com.dbserver.desafio_votacao.dto.SessaoVotacaoDTO;
 import br.com.dbserver.desafio_votacao.dto.VotoDTO;
+import br.com.dbserver.desafio_votacao.exception.CPFUnableToVoteException;
 import br.com.dbserver.desafio_votacao.exception.RecursoNaoEncontradoException;
 import br.com.dbserver.desafio_votacao.exception.VotacaoForaDaSessaoException;
 import br.com.dbserver.desafio_votacao.exception.VotacaoJaFeitaComEsseCpfException;
 import br.com.dbserver.desafio_votacao.mapper.VotoMapper;
+import br.com.dbserver.desafio_votacao.model.Associado;
 import br.com.dbserver.desafio_votacao.model.Voto;
 import br.com.dbserver.desafio_votacao.repository.VotoRepository;
 import br.com.dbserver.desafio_votacao.service.AssociadoService;
 import br.com.dbserver.desafio_votacao.service.SessaoVotacaoService;
 import br.com.dbserver.desafio_votacao.service.VotoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class VotoServiceImpl implements VotoService {
 
     private final VotoRepository votoRepository;
     private final VotoMapper votoMapper;
     private final AssociadoService associadoService;
     private final SessaoVotacaoService sessaoVotacaoService;
-
-    public VotoServiceImpl (VotoRepository votoRepository, VotoMapper votoMapper,
-                            AssociadoService associadoService, SessaoVotacaoService sessaoVotacaoService){
-        this.votoRepository = votoRepository;
-        this.votoMapper = votoMapper;
-        this.associadoService = associadoService;
-        this.sessaoVotacaoService = sessaoVotacaoService;
-    }
+    private final CPFValidadorClient cpfValidadorClient;
 
     @Override
     public List<VotoDTO> listarTodas() {
@@ -77,6 +76,7 @@ public class VotoServiceImpl implements VotoService {
     private void validarVoto (VotoDTO votoDto){
         AssociadoDTO associadoDto = associadoService.buscarPorId(votoDto.cpfAssociado());
         SessaoVotacaoDTO sessaoVotacaoDto = sessaoVotacaoService.buscarPorId(votoDto.idSessaoVotacao());
+        this.verificarCPFValido(associadoDto.cpf());
         this.verificarVotoUnico(associadoDto, sessaoVotacaoDto);
         this.verificarHorarioDeVotacao(sessaoVotacaoDto);
 
@@ -96,6 +96,11 @@ public class VotoServiceImpl implements VotoService {
         }
         if(agora.isAfter(sessaoVotacaoDto.fechamentoSessao())){
             throw new VotacaoForaDaSessaoException("Voto não pôde ser efetuado. Sessão finalizada");
+        }
+    }
+    private void verificarCPFValido(String cpf){
+        if (!cpfValidadorClient.isAbleToVote(cpf)) {
+            throw new CPFUnableToVoteException("Associado não pode votar.");
         }
     }
 }
